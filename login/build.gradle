@@ -1,0 +1,53 @@
+if (rootProject.ext.android.isApplication) {//修改插件的类型
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+android {
+    namespace 'com.llw.login'
+    compileSdk rootProject.ext.android.compileSdk
+
+    defaultConfig {
+        if (rootProject.ext.android.isApplication) {//application时需要id，版本号、版本名
+            applicationId "com.llw.login"
+            versionCode rootProject.ext.android.versionCode
+            versionName rootProject.ext.android.versionName
+        }
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            if (rootProject.ext.android.isApplication) {//修改使用的AndroidManifest
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.compileOptions.sourceCompatibility
+        targetCompatibility rootProject.ext.compileOptions.targetCompatibility
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.dependencies.publicImplementation
+    implementation rootProject.ext.dependencies.publicTestImplementation
+    implementation rootProject.ext.dependencies.publicAndroidTestImplementation
+    rootProject.ext.dependencies.other.each {
+        implementation project(it)
+    }
+}

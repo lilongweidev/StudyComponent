@@ -1,0 +1,43 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.llw.component'
+    compileSdk rootProject.ext.android.compileSdk
+
+    defaultConfig {
+        applicationId "com.llw.component"
+        minSdk rootProject.ext.android.minSdk
+        targetSdk rootProject.ext.android.targetSdk
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility rootProject.ext.compileOptions.sourceCompatibility
+        targetCompatibility rootProject.ext.compileOptions.targetCompatibility
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.dependencies.publicImplementation
+    implementation rootProject.ext.dependencies.publicTestImplementation
+    implementation rootProject.ext.dependencies.publicAndroidTestImplementation
+    rootProject.ext.dependencies.other.each {
+        implementation project(it)
+    }
+    //不是组件时才依赖
+    if (!rootProject.ext.android.isApplication) {
+        implementation project(path: ':login')
+        implementation project(path: ':personal')
+    }
+}
