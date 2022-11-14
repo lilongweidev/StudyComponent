@@ -40,4 +40,6 @@ dependencies {
         implementation project(path: ':login')
         implementation project(path: ':personal')
     }
+
+    annotationProcessor project(path: ':annotation_compiler')
 }

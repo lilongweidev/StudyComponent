@@ -50,4 +50,5 @@ dependencies {
     rootProject.ext.dependencies.other.each {
         implementation project(it)
     }
+    annotationProcessor project(path: ':annotation_compiler')
 }

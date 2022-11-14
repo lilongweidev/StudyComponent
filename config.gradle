@@ -31,7 +31,8 @@ ext {
                     'androidx.test.espresso:espresso-core:3.4.0'
             ],
             other : [
-                    ':basic'
+                    ':basic',
+                    ':annotation',
             ]
     ]
 }
